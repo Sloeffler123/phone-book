@@ -1,4 +1,4 @@
-
+from search import Trie
 
 class Node:
     def __init__(self,val):
@@ -38,4 +38,43 @@ class LinkedList:
             print(current.val, end=' -> ')
             current = current.next
         print('None')    
-        
+    def remove_by_key_value(self,key,value):
+        current = self.head
+        previous_node = None
+        while current:
+            if key in current.val and current.val[key] == value:
+                if previous_node:
+                    previous_node.next = current.next
+                else:
+                    self.head = current.next
+                return 
+            previous_node = current
+            current = current.next
+        print('No Match found.')
+linked_list = LinkedList()
+trie = Trie()
+def add_contact():
+    name = input('Enter name: ')
+    number = input('Enter number: ')
+    name = Node({name: number})
+    linked_list.add_to_tail(name)
+    trie.add(name)
+    trie.add(number)
+
+on = True
+while on:
+    linked_list.display()
+    user_input = int(input('To add a contact press (1).' \
+    'To remove a contact press (2).' \
+    'To search a contact press (3): '))
+    match user_input:
+        case 1:
+            add_contact()
+        case 2:
+            name_remove = input('Please enter the name you would like to remove: ')
+            number_to_remove = input('Please enter the number of contact you would like to delete: ')
+            use_check = input(f'Please type (Y)es that you would like to remove {name_remove}:{number_to_remove} ').upper()
+            if use_check == 'Y' or use_check == 'YES':
+                linked_list.remove_by_key_value(name_remove,number_to_remove)
+        case 3:
+            pass
