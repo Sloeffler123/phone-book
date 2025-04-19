@@ -66,7 +66,8 @@ while on:
     linked_list.display()
     user_input = int(input('To add a contact press (1).' \
     'To remove a contact press (2).' \
-    'To search a contact press (3): '))
+    'To search a contact press (3).' \
+    'To quit press (4): '))
     match user_input:
         case 1:
             add_contact()
@@ -82,3 +83,5 @@ while on:
             prefix = input('Please enter the name or number you would like to search. If you cant remember the full name or number type the characters you do remember and a list of names or numbers will be presented to you.')
             results = trie.words_with_prefix(prefix)
             print(f'Here is your matched results: {results}')
+        case 4:
+            on = False    
