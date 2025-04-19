@@ -56,11 +56,11 @@ trie = Trie()
 def add_contact():
     name = input('Enter name: ')
     number = input('Enter number: ')
-    name = Node({name: number})
-    linked_list.add_to_tail(name)
     trie.add(name)
     trie.add(number)
-
+    name = Node({name: number})
+    linked_list.add_to_tail(name)
+    
 on = True
 while on:
     linked_list.display()
@@ -76,5 +76,9 @@ while on:
             use_check = input(f'Please type (Y)es that you would like to remove {name_remove}:{number_to_remove} ').upper()
             if use_check == 'Y' or use_check == 'YES':
                 linked_list.remove_by_key_value(name_remove,number_to_remove)
+                trie.remove(name_remove)
+                trie.remove(number_to_remove)
         case 3:
-            pass
+            prefix = input('Please enter the name or number you would like to search. If you cant remember the full name or number type the characters you do remember and a list of names or numbers will be presented to you.')
+            results = trie.words_with_prefix(prefix)
+            print(f'Here is your matched results: {results}')

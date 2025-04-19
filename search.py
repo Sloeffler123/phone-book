@@ -25,8 +25,7 @@ class Trie:
             words.append(current_prefix)
         for char in sorted(current_level.keys()):
             if char != self.end_symbol:
-                extended_prefix = current_prefix + char
-                self.search_level(current_level[char],extended_prefix,words)
+                self.search_level(current_level[char],current_prefix + char,words)
         return words        
                     
     def words_with_prefix(self,prefix):
@@ -39,11 +38,20 @@ class Trie:
         return self.search_level(current,prefix,matching_words)
 
     def remove(self,word):
-        current = self.root
-        for char in word:
-            if self.end_symbol == current:
-                path = current
-            current = current[char]
+        if not self.exists(word):
+            return
+        self.remove_helper(self.root,word,0)
     
-    def remove_helper(self,path):
+    def remove_helper(self,current_node,word,index):
+        if index == len(word):
+            if self.end_symbol in current_node:
+                del current_node[self.end_symbol]
+            return len(current_node) == 0
+        char = word[index]
+
+        should_delete_current_node = self.remove_helper(current_node[char],word,index + 1)
+        if should_delete_current_node:
+            del current_node[char]
+            return len(current_node) == 0 and self.end_symbol not in current_node
+        return False    
         
